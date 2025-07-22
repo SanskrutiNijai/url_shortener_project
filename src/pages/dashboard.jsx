@@ -44,7 +44,7 @@ const Dashboard = () => {
   url.title?.toLowerCase().includes(searchQuery.toLowerCase())
 );
 
-console.log("urls:", urls);
+
 
   return (
     <div className='flex flex-col gap-8'>
