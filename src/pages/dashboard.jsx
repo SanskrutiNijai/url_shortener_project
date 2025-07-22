@@ -14,6 +14,7 @@ import useFetch from '@/hooks/use-fetch';
 import { getClicksForUrls } from '@/db/apiClicks';
 import { UrlState } from '@/context'; 
 import LinkCard from '@/components/link-card';
+import CreateLink from '@/components/create-link';
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -70,7 +71,7 @@ const Dashboard = () => {
       </div>
       <div className='flex justify-between'>
         <h1 className='text-4xl font-extrabbold'>My Links</h1>
-        <Button>Create Link</Button>
+        <CreateLink />
       </div>
 
       <div className='relative'>
