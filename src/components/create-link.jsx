@@ -1,10 +1,10 @@
 import { UrlState } from '@/context';
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -20,11 +20,16 @@ import { Button } from './ui/button';
 import { Input } from "@/components/ui/input";
 import Error from "@/components/Error"; 
 import * as yup from 'yup';
+import { QRCode } from 'react-qrcode-logo';
+import { BeatLoader } from 'react-spinners';
+import { createUrl } from '@/db/apiUrls';
+
 
 const CreateLink = () => {
 
   const {user} = UrlState();
   const navigate = useNavigate();
+  const ref = useRef();
   let [searchParams, setSearchParams] = useSearchParams();
   const longLink = searchParams.get("createNew");  
 
@@ -50,13 +55,57 @@ const CreateLink = () => {
     });
   };
 
+ 
+
+  const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
+
+  
+
+  const createNewLink = async () => {
+  setErrors({});
+  setError(null);
+  setLoading(true);
+
+  try {
+    // Validate form fields
+    await schema.validate(formValues, { abortEarly: false });
+
+    // Convert QR canvas to blob
+    const canvas = ref.current.canvasRef.current;
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve));
+
+    // Call createUrl directly
+    const data = await createUrl({ ...formValues, user_id: user.id }, blob);
+
+    // Redirect to new link page
+    navigate(`/link/${data[0].id}`);
+  } catch (err) {
+    if (err?.inner) {
+      // Validation errors
+      const newErrors = {};
+      err.inner.forEach((e) => {
+        newErrors[e.path] = e.message;
+      });
+      setErrors(newErrors);
+    } else {
+      // Server or other error
+      setError(err);
+      console.error("Error creating link:", err);
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
+
   return (
     <Dialog
     defaultOpen={longLink}
     onOpenChange={(res) => {
         if (!res) setSearchParams({});
     }}>
-  <DialogTrigger>
+  <DialogTrigger asChild>
     <Button variant="destructive">Create New Link</Button>
   </DialogTrigger>
   <DialogContent className="sm:max-w-md">
@@ -64,19 +113,26 @@ const CreateLink = () => {
       <DialogTitle className="font-bold text-2xl">Create New</DialogTitle>
     </DialogHeader>
 
+    {
+      formValues?.longUrl && (
+        <QRCode value={formValues?.longUrl} size={250} ref={ref}/>
+      )
+    }
+
     <Input 
     id="title" 
     placeholder="Short Link's Title" 
     value = {formValues.title}
     onChange={handleChange} />
-    <Error message={"some error"} />
+    {errors.title && <Error message={errors.title} />}
+
 
     <Input 
     id="longUrl" 
     placeholder="Enter your Long URL" 
     value = {formValues.longUrl}
     onChange={handleChange}/>
-    <Error message={"some error"} />
+    {errors.longUrl && <Error message={errors.longUrl} />}
 
     <div className="flex items-center gap-2">
         <Card className="p-2">trimrr.in</Card> /
@@ -88,10 +144,12 @@ const CreateLink = () => {
     </div>
 
     
-    <Error message={"some error"} />
+    {error && <Error message={error.message} />}
 
     <DialogFooter className="sm:justify-start">
-        <Button variant="destructive">Create</Button>
+        <Button disabled={loading} onClick = {createNewLink} variant="destructive">
+          {loading ? <BeatLoader size = {10} color="white" /> : "Create"}
+        </Button>
     </DialogFooter>
 
   </DialogContent>

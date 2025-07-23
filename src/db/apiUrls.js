@@ -1,4 +1,5 @@
-import supabase from "./supabase";
+import supabase, { supabaseUrl } from "./supabase"; 
+
 
 export async function getUrls(user_id){
     const {data, error} = await supabase.from("urls").select("*").eq("user_id", user_id);
@@ -34,8 +35,8 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode){
     .insert([
         {
             title,
-            original_url: longUrl,
-            custome_url: customUrl || null,
+            "original-url": longUrl,
+            custom_url: customUrl || null,
             user_id,
             short_url,
             qr,
