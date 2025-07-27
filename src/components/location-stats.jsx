@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis,  Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
 export default function Location({stats}) {
@@ -12,7 +12,7 @@ export default function Location({stats}) {
         return acc;
 
     }, {});
-    const cities = Object.entries(cityCount).map(([city, count]) => ({
+    const cities = Object.keys(cityCount).map(([city, count]) => ({
         city, count,
     }));
   return (
