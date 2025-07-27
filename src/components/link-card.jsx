@@ -43,7 +43,7 @@ const LinkCard = ({url, fetchurls}) => {
     </span>
     </Link>
 
-    <div className='flex gaap-2'>
+    <div className='flex gap-2'>
         <Button onClick={() => navigator.clipboard.writeText(`https://trimrr.in/${url?.short_url}`)}>
             <Copy />
         </Button>

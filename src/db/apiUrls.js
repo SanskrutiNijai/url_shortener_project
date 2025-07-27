@@ -1,4 +1,4 @@
-import { UAParser } from "ua-parser-js";
+
 import supabase, { supabaseUrl } from "./supabase"; 
 
 
@@ -36,7 +36,7 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode){
     .insert([
         {
             title,
-            "original-url": longUrl,
+            original_url: longUrl,
             custom_url: customUrl || null,
             user_id,
             short_url,
@@ -57,37 +57,33 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode){
 }
 
 export async function getLongUrl({ id }){
-    const {data, error} = await (await supabase.from("urls").select("id, original-url"))
-    .or(`short_url.eq.${id},custom_url.eq.${id}`).single();
-    
-    if (error) {
+     const { data, error } = await supabase
+    .from("urls")
+    .select("id, original_url")
+    .or(`short_url.eq.${id},custom_url.eq.${id}`)
+    .single();
+
+    if (error){
         console.error(error.message);
         throw new Error("Error fetching short link");
     }
+     
     return data;
 }
 
-const parser = new UAParser();
+export async function getUrl({ id, user_id }){
+     const { data, error } = await supabase
+    .from("urls")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user_id)
+    .single();
 
-export const storeClicks = async ({ id, originalUrl}) => {
-    try{
-        console.log("Storing click for", originalUrl);
-        const res = parser.getResult();
-        const device = res.type || "desktop";
-
-        const response = await fetch("https://ipapi.co/json");
-        const {city, country_name: country} = await response.json();
-
-        await supabase.from("clicks").insert({
-            url_id: id,
-            city: city,
-            country: country,
-            device: device,
-        });
-
-        window.location.href = originalUrl;
-        
-    }catch(error){
-        console.error("Error recording click: ", error);
+    if (error){
+        console.error(error.message);
+        throw new Error("Short Url not found");
     }
-};
+     
+    return data;
+}
+

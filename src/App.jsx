@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         path: '/link/:id',
         element: 
         <RequireAuth>
-          <Link />,
+          <Link />
         </RequireAuth>
       },
       {
