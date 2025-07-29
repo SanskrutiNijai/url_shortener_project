@@ -18,8 +18,17 @@ const RedirectLink = () => {
   });
 
   useEffect(() => {
-    fn()
-  }, [])
+  fn(); // fetch the long URL
+}, []);
+
+useEffect(() => {
+  if (!loading && data?.original_url) {
+    fnStats(); // track the click
+    window.location.href = data.original_url; // redirect to long URL
+  }
+}, [loading, data]);
+
+
 
 
   useEffect(() => {
@@ -28,6 +37,8 @@ const RedirectLink = () => {
     if (data) {
       fnStats();
     } else {
+      console.log("Redirecting short URL:", id);
+
       console.log("No data found for short URL!");
     }
   }

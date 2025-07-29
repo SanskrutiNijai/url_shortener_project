@@ -13,7 +13,7 @@ const AppLayout = () => {
             <Outlet />
         </main>
 
-        <div className="p-10 text-center bg-gray-800 mt-10">
+        <div className="p-10 text-center text-white text-2xl font-bold bg-gray-800 mt-10">
           Made by Sanskruti
         </div>
     </div>

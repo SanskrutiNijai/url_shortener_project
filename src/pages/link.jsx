@@ -6,6 +6,7 @@ import { LinkIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
+import { BeatLoader } from 'react-spinners';
 import { Button } from "@/components/ui/button";
 import { Copy, Download, Trash } from 'lucide-react';
 import {
@@ -75,10 +76,10 @@ const Link = () => {
       <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
         <span className="text-6xl font-extrabold hover:underline cursor-pointer">{url?.title}</span>
 
-        <a href={`https://trimrr.in/${link}`} 
+        <a href={`https://clipr.in/${link}`} 
         target="_blank"
         className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"> 
-        https://trimrr.in/{link}
+        https://clipr.in/{link}
         </a>
 
         <a href={url?.original_url} 
@@ -89,7 +90,7 @@ const Link = () => {
         </a>
         <span className="flex items-end font-extralight text-sm">{new Date(url?.created_at).toLocaleString()}</span>
          <div className='flex gap-2'>
-        <Button onClick={() => navigator.clipboard.writeText(`https://trimrr.in/${url?.short_url}`)}>
+        <Button onClick={() => navigator.clipboard.writeText(`https://clipr.in/${url?.short_url}`)}>
             <Copy />
         </Button>
         <Button onClick={downloadImage}>

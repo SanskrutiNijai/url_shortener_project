@@ -39,11 +39,15 @@ const LandingPage = () => {
         <Button className="h-12" type="submit" variant="destructive">Shorten!</Button>
 
       </form>
-      <img src="/banner.jpg" alt="banner" className='w-full my-11 md:px-11' />
+      
+ <div className="w-full bg-[#0e0f12] px-4 md:px-10 lg:px-20 py-2 mt-10 flex items-center justify-center">
+  <img src="/banner.png" alt="banner" className="w-full h-auto object-contain" />
+</div>
+
 
       <Accordion type="multiple" collapsible className='w-full md:px-11'>
   <AccordionItem value="item-1">
-    <AccordionTrigger>How does the Trimrr URL shortener works?</AccordionTrigger>
+    <AccordionTrigger>How does the Clipr URL shortener works?</AccordionTrigger>
     <AccordionContent>
       When you enter a long URL, our system generates a shorter version of that URL. This shortened URL redirects to the 
       original long URL when accessed.

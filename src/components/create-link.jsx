@@ -135,7 +135,7 @@ const [error, setError] = useState(null);
     {errors.longUrl && <Error message={errors.longUrl} />}
 
     <div className="flex items-center gap-2">
-        <Card className="p-2">trimrr.in</Card> /
+        <Card className="p-2">clipr.in</Card> /
         <Input 
         id="customUrl" 
         placeholder="Custom Link (optional)" 
