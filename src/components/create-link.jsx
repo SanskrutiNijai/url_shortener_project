@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from './ui/button';
 import { Input } from "@/components/ui/input";
-import Error from "@/components/Error"; 
+import Error from "@/components/error"; 
 import * as yup from 'yup';
 import { QRCode } from 'react-qrcode-logo';
 import { BeatLoader } from 'react-spinners';
