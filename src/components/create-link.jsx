@@ -135,7 +135,7 @@ const [error, setError] = useState(null);
     {errors.longUrl && <Error message={errors.longUrl} />}
 
     <div className="flex items-center gap-2">
-        <Card className="p-2">clipr-g1mz.onrender.com</Card> /
+        <Card className="p-2">clipr-url.netlify.app</Card> /
         <Input 
         id="customUrl" 
         placeholder="Custom Link (optional)" 

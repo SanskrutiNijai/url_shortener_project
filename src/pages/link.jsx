@@ -76,10 +76,10 @@ const Link = () => {
       <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
         <span className="text-6xl font-extrabold hover:underline cursor-pointer">{url?.title}</span>
 
-        <a href={`https://clipr-g1mz.onrender.com/${link}`} 
+        <a href={`https://clipr-url.netlify.app/${link}`} 
         target="_blank"
         className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"> 
-        https://clipr-g1mz.onrender.com/{link}
+        https://clipr-url.netlify.app/{link}
         </a>
 
         <a href={url?.original_url} 
@@ -90,7 +90,7 @@ const Link = () => {
         </a>
         <span className="flex items-end font-extralight text-sm">{new Date(url?.created_at).toLocaleString()}</span>
          <div className='flex gap-2'>
-        <Button onClick={() => navigator.clipboard.writeText(`https://clipr-g1mz.onrender.com/${url?.short_url}`)}>
+        <Button onClick={() => navigator.clipboard.writeText(`https://clipr-url.netlify.app/${url?.short_url}`)}>
             <Copy />
         </Button>
         <Button onClick={downloadImage}>
