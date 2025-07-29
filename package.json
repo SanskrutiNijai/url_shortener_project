@@ -23,7 +23,6 @@
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-fetch-hook": "^1.9.5",
     "react-is": "^19.1.0",
     "react-qrcode-logo": "^3.0.0",
     "react-router-dom": "^6.23.1",
