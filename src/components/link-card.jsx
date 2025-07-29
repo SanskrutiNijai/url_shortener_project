@@ -44,7 +44,7 @@ const LinkCard = ({url, fetchurls}) => {
     </Link>
 
     <div className='flex gap-2'>
-        <Button onClick={() => navigator.clipboard.writeText(`https://clipr.in/${url?.short_url}`)}>
+        <Button onClick={() => navigator.clipboard.writeText(`https://clipr-g1mz.onrender.com/${url?.short_url}`)}>
             <Copy />
         </Button>
         <Button onClick={downloadImage}>
