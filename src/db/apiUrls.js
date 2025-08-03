@@ -56,20 +56,23 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode){
     return data;
 }
 
-export async function getLongUrl({ id }){
-     const { data, error } = await supabase
-    .from("urls")
-    .select("id, original_url")
-    .or(`short_url.eq.${id},custom_url.eq.${id}`)
-    .single();
 
-    if (error){
-        console.error(error.message);
-        throw new Error("Error fetching short link");
-    }
-     
-    return data;
-}
+export const getLongUrl = async ({ id }) => {
+  console.log("🌐 getLongUrl called with:", id);
+
+  const { data, error } = await supabase
+    .from("urls")
+    .select("*")
+    .eq("short_url", id)
+    .limit(1)
+  .single();
+
+  if (error) {
+    throw new Error("URL not found");
+  }
+
+  return data;
+};
 
 export async function getUrl({ id, user_id }){
      const { data, error } = await supabase

@@ -64,7 +64,7 @@ const Link = () => {
 
   let link = "";
   if (url){
-    link = url?.custom_url ? url?.custom_url : url.short_url;
+    link = url?.short_url ? url?.short_url : url.custom_url;
   }
 
   return (

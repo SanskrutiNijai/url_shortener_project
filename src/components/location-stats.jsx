@@ -12,7 +12,7 @@ export default function Location({stats}) {
         return acc;
 
     }, {});
-    const cities = Object.keys(cityCount).map(([city, count]) => ({
+    const cities = Object.entries(cityCount).map(([city, count]) => ({
         city, count,
     }));
   return (
@@ -23,7 +23,7 @@ export default function Location({stats}) {
         height={300}
         data={cities.slice(0,5)}
       >
-        <XAxis dataKey="name" />
+        <XAxis dataKey="city" />
         <YAxis />
         <Tooltip labelStyle={{color: "green"}}/>
         <Legend />

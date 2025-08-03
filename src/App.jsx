@@ -47,8 +47,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  console.log("App mounted");
   return <UrlProvider>
-    <RouterProvider router={router}/>;
+    <RouterProvider router={router}/>
   </UrlProvider>
 }
 

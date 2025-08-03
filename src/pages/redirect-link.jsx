@@ -1,50 +1,48 @@
 import { getLongUrl } from "@/db/apiUrls";
 import { storeClicks } from "@/db/apiClicks";
 import useFetch from "@/hooks/use-fetch";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 
 const RedirectLink = () => {
-  const { id } = useParams(); // ✅ only this line
-
-
-
+ 
+  const { id } = useParams(); 
   const {loading, data, error, fn} = useFetch(getLongUrl, { id });
 
-  const {loading: loadingStats, fn: fnStats} = useFetch(storeClicks, {
-    id: data?.id,
-    originalUrl: data?.original_url
-  });
 
-  useEffect(() => {
-  fn(); // fetch the long URL
-}, []);
+ useEffect(() => {
+  console.log("📡 Fetching long URL...");
+    fn(); 
+  }, []);
+
+  const hasTracked = useRef(false); 
 
 useEffect(() => {
-  if (!loading && data?.original_url) {
-    fnStats(); // track the click
-    window.location.href = data.original_url; // redirect to long URL
+  if (!loading && data?.original_url && !hasTracked.current) {
+    hasTracked.current = true; // prevent double insertions
+
+    (async () => {
+      try {
+        await storeClicks({
+          id: data.id,
+          originalUrl: data.original_url,
+        });
+      } catch (err) {
+        console.error("Click tracking failed:", err);
+      } finally {
+        console.log("➡️ Redirecting to:", data.original_url);
+        setTimeout(() => {
+          console.log("➡️ Delayed redirect...");
+          window.location.href = data.original_url;
+        }, 1000);
+      }
+    })();
+  } else if (!loading && !data) {
+    console.warn("No long URL found for this ID.");
   }
 }, [loading, data]);
-
-
-
-
-  useEffect(() => {
-  if (!loading) {
-  
-    if (data) {
-      fnStats();
-    } else {
-      console.log("Redirecting short URL:", id);
-
-      console.log("No data found for short URL!");
-    }
-  }
-}, [loading]);
-
-  if (loading || loadingStats){
+  if (loading){
     return (
       <>
       <BarLoader width = {"100%"} color="#36d7b7" />

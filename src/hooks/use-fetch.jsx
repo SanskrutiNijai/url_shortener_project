@@ -10,8 +10,10 @@ const useFetch = (cb, options = {}) => {
         setError(null);
         try{
             const response =await cb(options, ...args);
+            console.log("useFetch: Got response:", response);
             setData(response);
         }catch(error){
+            console.error("useFetch error:", error);
             setError(error);
         }finally{
             setLoading(false);
