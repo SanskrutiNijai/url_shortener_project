@@ -63,7 +63,7 @@ export const getLongUrl = async ({ id }) => {
   const { data, error } = await supabase
     .from("urls")
     .select("*")
-    .eq("short_url", id)
+    .eq("custom_url", id)
     .limit(1)
   .single();
 
